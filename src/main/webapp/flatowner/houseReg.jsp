@@ -25,48 +25,40 @@ if(session.getAttribute("owner")==null){
                 <div class="card-body">
                     <h3 class="text-center">
 						Register Your House Here
+						
                     </h3>
                     <form action="<%=request.getContextPath() %>/house" method="post">
+                    <input type="hidden" id="ownerId" name="ownerId" value="<%= owner.getOwnerId() %>">
                    <div class="form-group row">
-                            <label for="inputfirstName" class="col-sm-3 col-form-label">First Name</label>
+                            <label for="inputfirstName" class="col-sm-3 col-form-label">Select District</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="firstName" id="inputfirstName"
-                                       placeholder="First Name" >
+                              <select class="form-control" name="district">
+                              	<option value ="Dhaka" name="district">Dhaka</option>
+                              </select>
                             </div>
                         </div>
                          <div class="form-group row">
-                            <label for="inputlastName" class="col-sm-3 col-form-label">Last Name</label>
+                            <label for="inputlastName" class="col-sm-3 col-form-label">Region</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="lastName" id="inputlastName"
-                                       placeholder="Last Name">
+                                <select class="form-control" name="region">
+                              	<option value ="Gulshan" name="region">Gulshan</option>
+                              	<option value ="Banani" name="region">Banani</option>
+                              	<option value ="Tejgaon" name="region">Tejgaon</option>
+                              </select>
                             </div>
                         </div>
                       <div class="form-group row">
-                            <label for="inputPhone3" class="col-sm-3 col-form-label">Phone No</label>
+                            <label for="inputPhone5" class="col-sm-3 col-form-label">HouseAddress</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" name="phoneno" id="inputPhone3"
-                                       placeholder="Phone No">
+                                <textArea type="text" class="form-control" name="houseAddress" id="inputPhone5"
+                                       placeholder="House Address"></textArea>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" name="email" id="inputEmail3"
-                                       placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
-                            <div class="col-sm-9">
-                                <input type="password" class="form-control" name="password" id="inputPassword3"
-                                       placeholder="Password">
-                            </div>
-                        </div>
-
-
+                        
+                       
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <button type="submit" name="operationType" value="reg" class="btn btn-success btn-block">Create Account</button>
+                                <button type="submit" name="operationType" value="addhouse" class="btn btn-success btn-block">Add Hosue</button>
                             </div>
                         </div>
                     </form>

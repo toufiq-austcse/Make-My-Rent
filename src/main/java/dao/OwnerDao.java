@@ -27,6 +27,7 @@ public class OwnerDao {
 			myPreparedStatement.setString(4, owner.getPhoneNumber());
 			myPreparedStatement.setString(5, owner.getPassword());
 			res = myPreparedStatement.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

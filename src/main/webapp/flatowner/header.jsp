@@ -17,9 +17,9 @@ Owner owner  = (Owner)session.getAttribute("owner");
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                        <a class="dropdown-item" href="<%=request.getContextPath() %>/flatowner/houseReg.jsp">Add House</a>
+                        <a class="dropdown-item" href="<%=request.getContextPath() %>/house?req=addhouse">Add House</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Manage House</a>
+                        <a class="dropdown-item" href="<%=request.getContextPath() %>/house?req=managehouse">Manage House</a>
                     </div>
                 </li>
                 
