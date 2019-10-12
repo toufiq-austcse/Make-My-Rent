@@ -18,6 +18,7 @@ public class HouseDao{
 	}
 	
 	public int insertHouse(House aHouse) {
+		System.out.println(aHouse.getOwnerId());
 		Connection connection = DatabaseManager.GetConnection();
 		int res = 0;
 		try {

@@ -28,7 +28,7 @@ if(session.getAttribute("owner")==null){
 						
                     </h3>
                     <form action="<%=request.getContextPath() %>/rent" method="post" enctype="multipart/form-data">
-                    <input type="hidden" id="ownerId" name="ownerId" value="<%= owner.getOwnerId() %>">
+                    <input type="hidden" id="houseId" name="houseId" value="<%= request.getParameter("hid") %>">
                    <div class="form-group row">
                             <label  class="col-sm-3 col-form-label"  >No of Rooms</label>
                             <div class="col-sm-9">

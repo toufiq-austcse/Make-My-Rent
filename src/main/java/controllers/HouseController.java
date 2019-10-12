@@ -13,13 +13,16 @@ import javax.servlet.http.HttpSession;
 
 import bll.HouseManager;
 import bll.OwnerManager;
+import bll.RentManager;
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import models.House;
 import models.Owner;
+import models.Rent;
 
 @WebServlet("/house")
 public class HouseController extends HttpServlet{
 	private HouseManager aHouseManager = new HouseManager();
+	private RentManager aRentManager = new RentManager();
 	private OwnerManager aOwnerManager = new OwnerManager();
 
 	@Override
@@ -42,7 +45,16 @@ public class HouseController extends HttpServlet{
 				int houseId = Integer.parseInt(req.getParameter("hid").toString().trim());
 				
 			}else if(path.equals("rent")) {
+				
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("flatowner/rent.jsp");
+		
+				requestDispatcher.forward(req, resp);
+			}else if(path.equals("getflat")) {
+				String hid = req.getParameter("hid");
+				ArrayList<Rent> allRents = this.aRentManager.getAllRents(Integer.parseInt(hid));
+				
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("flatowner/managerents.jsp");
+				req.setAttribute("rents", allRents);
 				requestDispatcher.forward(req, resp);
 			}
 			
@@ -59,7 +71,13 @@ public class HouseController extends HttpServlet{
 			String houseAddress = req.getParameter("houseAddress");
 			House aHouse = new House(district, region, houseAddress, ownerId);
 			if(this.aHouseManager.insertHouse(aHouse)) {
-				
+				HttpSession session = req.getSession();
+				Owner owner = this.aOwnerManager.getOwner((Owner)session.getAttribute("owner"));
+				ArrayList<House> houses = this.aHouseManager.getAllHouse(owner.getOwnerId());
+			
+				RequestDispatcher requestDispatcher = req.getRequestDispatcher("flatowner/managehouse.jsp");
+				req.setAttribute("houses", houses);
+				requestDispatcher.forward(req, resp);
 			}
 			
 		}

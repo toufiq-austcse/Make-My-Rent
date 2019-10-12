@@ -16,6 +16,7 @@
   	<description></description>
   	<servlet-class>controllers.OwnerRegistration</servlet-class>
   </servlet>
+
   <servlet-mapping>
   	<servlet-name>TaskController</servlet-name>
   	<url-pattern>/TaskController</url-pattern>
@@ -24,4 +25,5 @@
   	<servlet-name>OwnerRegistration</servlet-name>
   	<url-pattern>/OwnerRegistration</url-pattern>
   </servlet-mapping>
+ 
 </web-app>
