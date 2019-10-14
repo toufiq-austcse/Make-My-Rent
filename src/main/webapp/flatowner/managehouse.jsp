@@ -21,7 +21,11 @@ if(session.getAttribute("owner")==null){
 <body>
 <script>
 	function deleteHouse(id) {
-		console.log(id);
+		if(confirm("Press a button!")){
+			console.log('YEs')
+		}else{
+			console.log('No')
+		}
 	}
 </script>
  <%@include file="header.jsp"  %>
@@ -49,9 +53,9 @@ if(session.getAttribute("owner")==null){
       <td><%= houses.get(i).getRegion() %></td>
       <td><%= houses.get(i).getHouseAddress() %></td>
       <td>
+
       	<a style="color:white" class="btn btn-info" href="<%=request.getContextPath() %>/house?req=rent&hid=<%=houses.get(i).getHouseId()%>">Rent Flat</a>
       		<a style="color:white" class="btn btn-secondary" href="<%=request.getContextPath() %>/house?req=getflat&hid=<%=houses.get(i).getHouseId()%>">Show Rents</a>
-      	<a style="color:white" class="btn btn-danger" onclick="deleteHouse(<%=houses.get(i).getHouseId() %>)">Delete</a>
       </td>
     </tr>
 	  <%

@@ -73,11 +73,14 @@ public class HouseController extends HttpServlet{
 			if(this.aHouseManager.insertHouse(aHouse)) {
 				HttpSession session = req.getSession();
 				Owner owner = this.aOwnerManager.getOwner((Owner)session.getAttribute("owner"));
+				
 				ArrayList<House> houses = this.aHouseManager.getAllHouse(owner.getOwnerId());
 			
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("flatowner/managehouse.jsp");
 				req.setAttribute("houses", houses);
 				requestDispatcher.forward(req, resp);
+			}else {
+				
 			}
 			
 		}

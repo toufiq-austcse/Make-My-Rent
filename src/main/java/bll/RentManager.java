@@ -18,4 +18,22 @@ public class RentManager {
 	public ArrayList<Rent> getAllRents(){
 		return aRentDao.getAllRents();
 	}
+	
+	public Rent getAPublishedRent(int rentId) {
+		return this.aRentDao.getAPublishedRent(rentId);
+	}
+	public Rent getARent(int rentId) {
+		return this.aRentDao.getARent(rentId);
+	}
+	public boolean isUpdated(Rent aRent) {
+		return this.aRentDao.updateRent(aRent)>0;
+	}
+	
+	public boolean isDeleted(int rentId) {
+		return this.aRentDao.deleteRent(rentId)>0;
+	}
+	
+	public boolean isUpdatedImpression(int rentid) {
+		return this.aRentDao.updateImpression(rentid)>0;
+	}
 }

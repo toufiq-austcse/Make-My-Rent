@@ -40,6 +40,8 @@ if(session.getAttribute("owner")==null){
       <th scope="col">Per Month Rent</th>
       <th scope="col">Advance Amount</th>
       <th scope="col">Posted On</th>
+      <th scope="col">Status</th>
+      <th scope="col">Impression</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -51,10 +53,12 @@ if(session.getAttribute("owner")==null){
       <td><%= rents.get(i).getRentPerMonth() %></td>
       <td><%= rents.get(i).getAdvance() %></td>
         <td><%= rents.get(i).getCreatedAt() %></td>
+         <td><%= rents.get(i).isIspublish()?"Published":"Unpublished" %></td>
+         <td><%= rents.get(i).getImpression() %></td>
       <td>
-      	<a style="color:white" class="btn btn-info" href="<%=request.getContextPath() %>/house?req=rent&hid=<%=rents.get(i).getHouseId()%>">View Details</a>
+      	<a style="color:white" class="btn btn-info" href="<%=request.getContextPath() %>/rent?req=edit&rid=<%=rents.get(i).getRentId()%>">View Details</a>
       
-      	<a style="color:white" class="btn btn-danger" onclick="deleteHouse(<%=rents.get(i).getHouseId() %>)">Delete</a>
+      	<a style="color:white" class="btn btn-danger" href="<%=request.getContextPath() %>/rent?req=delete&rid=<%=rents.get(i).getRentId()%>&hid=<%=rents.get(i).getHouseId() %>" onclick="confirm('Are you Sure?')">Delete</a>
       </td>
     </tr>
 	  <%

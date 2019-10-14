@@ -10,9 +10,36 @@ public class Rent {
 	private String photos;
 	private String featuredPhotos;
 	private boolean ispublished;
+	private int impression;
 	private String createdAt;
 	private String updatedAt;
+	private House house;
+	private Owner aOwner;
 	
+	public Owner getaOwner() {
+		return aOwner;
+	}
+
+	public void setaOwner(Owner aOwner) {
+		this.aOwner = aOwner;
+	}
+
+	public boolean isIspublished() {
+		return ispublished;
+	}
+
+	public void setIspublished(boolean ispublished) {
+		this.ispublished = ispublished;
+	}
+
+	public House getHouse() {
+		return house;
+	}
+
+	public void setHouse(House house) {
+		this.house = house;
+	}
+
 	public Rent(int rentId, int houseId, String noOfRooms, String extras, String rentPerMonth, String advance,
 			String photos, String featuredPhotos, boolean ispublish) {
 		super();
@@ -39,6 +66,7 @@ public class Rent {
 		this.photos = photos;
 		this.featuredPhotos = featuredPhotos;
 		this.ispublished = ispublished;
+		
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -128,6 +156,14 @@ public class Rent {
 
 	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public int getImpression() {
+		return impression;
+	}
+
+	public void setImpression(int impression) {
+		this.impression = impression;
 	}
 	
 	

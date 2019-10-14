@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,14 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.HouseManager;
 import bll.OwnerManager;
+import bll.RentManager;
+import models.House;
 import models.Owner;
+import models.Rent;
 import security.PasswordHash;
 
 @WebServlet("/owner")
 public class OwnerController extends HttpServlet {
 	private OwnerManager ownerManager = new OwnerManager();
 	private PasswordHash passwordHash = new PasswordHash();
+	private RentManager rentManager = new RentManager();
+	private HouseManager aHouseManager = new HouseManager();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String operationType = request.getParameter("operationType");
@@ -34,8 +42,13 @@ public class OwnerController extends HttpServlet {
 				if(this.ownerManager.insertOwner(owner)) {
 					HttpSession session = request.getSession();
 					owner.setPassword(null);
-					session.setAttribute("owner", owner);
-					response.sendRedirect("flatowner/dashboard.jsp");
+					Owner aOwner =  this.ownerManager.getOwner(owner);
+					session.setAttribute("owner",aOwner);
+					ArrayList<House> houses = this.aHouseManager.getAllHouse(aOwner.getOwnerId());
+					
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("flatowner/managehouse.jsp");
+					request.setAttribute("houses", houses);
+					requestDispatcher.forward(request, response);
 				}else {
 					out.println("Registration Error!");
 				}
@@ -54,7 +67,12 @@ public class OwnerController extends HttpServlet {
 				HttpSession session = request.getSession();
 				owner.setPassword(null);
 				session.setAttribute("owner", owner);
-				response.sendRedirect("flatowner/dashboard.jsp");
+				Owner aowner = this.ownerManager.getOwner((Owner)session.getAttribute("owner"));
+				ArrayList<House> houses = this.aHouseManager.getAllHouse(aowner.getOwnerId());
+			
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("flatowner/managehouse.jsp");
+				request.setAttribute("houses", houses);
+				requestDispatcher.forward(request, response);
 			}else {
 				out.println("Login Error!");
 			}
@@ -67,7 +85,10 @@ public class OwnerController extends HttpServlet {
 		if(request.getParameter("logout").toString().trim().equals("true")) {
 			HttpSession session = request.getSession();
 			session.invalidate();  
-			response.sendRedirect("index.jsp");
+			ArrayList<Rent> allPublishedRents = this.rentManager.getAllRents();
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			request.setAttribute("allPublishedRents", allPublishedRents);
+			rd.forward(request, response);
 		}
 	}
 	

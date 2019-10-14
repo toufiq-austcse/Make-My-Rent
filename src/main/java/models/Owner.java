@@ -29,6 +29,11 @@ public class Owner {
 		this.lastName = lastName;
 	}
 	
+	public Owner() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public String getFirstName() {
 		return firstName;
 	}

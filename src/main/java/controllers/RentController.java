@@ -32,11 +32,74 @@ public class RentController extends HttpServlet{
 	private RentManager aRentManager = new RentManager();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+		if(req.getParameterMap().containsKey("req")) {
+			String path = req.getParameter("req").toString().trim();
+			if(path.equals("view")) {
+				int rentId = Integer.parseInt(req.getParameter("rid").toString().trim());
+				
+				this.aRentManager.isUpdatedImpression(rentId);
+				Rent aRent = this.aRentManager.getAPublishedRent(rentId);
+			
+				RequestDispatcher aDispatcher = req.getRequestDispatcher("viewdetails.jsp");
+				req.setAttribute("aRent", aRent);
+				aDispatcher.forward(req, resp);
+			}else if(path.equals("edit")) {
+				int rentId = Integer.parseInt(req.getParameter("rid").toString().trim());
+				Rent aRent = this.aRentManager.getARent(rentId);
+				
+			
+				RequestDispatcher aDispatcher = req.getRequestDispatcher("flatowner/editrent.jsp");
+				req.setAttribute("aRent", aRent);
+				aDispatcher.forward(req, resp);
+			}else if(path.equals("delete")) {
+				if(this.aRentManager.isDeleted( Integer.parseInt(req.getParameter("rid").toString().trim()))) {
+					resp.sendRedirect(req.getContextPath()+"/house?req=getflat&hid="+req.getParameter("hid").toString().trim());
+				}else {
+					PrintWriter out = resp.getWriter();
+					out.print("Not Deleted");
+				}
+			}
+			
+			
 		
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		if(req.getParameterMap().containsKey("req")) {
+			String path = req.getParameter("req").toString().trim();
+			if(path.equals("update")) {
+				String rentId = req.getParameter("rentId");
+				String houseId = req.getParameter("houseId");
+				String noOfRooms = req.getParameter("noOfRooms");
+				String extras = req.getParameter("extras");
+				String rent = req.getParameter("rent");
+				String advance = req.getParameter("advance");
+				String status = req.getParameter("status");
+				
+				Rent aRent = new Rent();
+				aRent.setRentId(Integer.parseInt(rentId));
+				aRent.setNoOfRooms(noOfRooms);
+				aRent.setExtras(extras);
+				aRent.setRentPerMonth(rent);
+				aRent.setAdvance(advance);
+				if(status.equals("0")) {
+					aRent.setIspublish(false);
+				}else {
+					aRent.setIspublish(true);
+				}
+				
+				if(this.aRentManager.isUpdated(aRent)) {
+				
+				res.sendRedirect(req.getContextPath()+"/house?req=getflat&hid="+houseId);
+				}else {
+					PrintWriter out = res.getWriter();
+					out.print("Not Updated");
+				}
+			}
+		}else {
 		
 		String RENTIMAGEUPLOADPATH = "E://javawebprojects//MakeMyRent//src//main//webapp//resource//rentimages//";
 		String FEATUREDIMAGEUPLOADPATH = "E://javawebprojects//MakeMyRent//src//main//webapp//resource//featuredimages//";
@@ -80,6 +143,7 @@ public class RentController extends HttpServlet{
 				e.printStackTrace();
 			}
 		}
+		}
 	}
 	
 	private String uploadFile(FileItem aFile,String uploadPath) throws Exception {
@@ -97,9 +161,10 @@ public class RentController extends HttpServlet{
 		String fileName = aFile.getName();
 		String ex = getExtension(fileName);
 	
+		String currentTimeInMils = Long.toString(System.currentTimeMillis());
 		if(isValidExtension(fileName)) {
-			aFile.write(new File(uploadPath +System.currentTimeMillis()+ex ));
-			return uploadPath +System.currentTimeMillis()+ex;
+			aFile.write(new File(uploadPath +currentTimeInMils+ex ));
+			return currentTimeInMils+ex;
 		}else {
 			return null;
 		}
